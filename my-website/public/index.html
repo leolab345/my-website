@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8f9fc" />
+    <meta
+      name="description"
+      content="My Website - 함께 이야기하고 성장하는 커뮤니티"
+    />
+    <title>My Website — 커뮤니티</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a href="/" class="brand" aria-label="My Website 홈">
+        <span class="brand-icon">M</span>
+        <span>My Website</span>
+      </a>
+      <div class="top-actions">
+        <span class="online"><span></span> 함께 이야기해요</span>
+        <button class="btn btn-primary" id="open-write">＋ 글쓰기</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">YOUR COMMUNITY, YOUR SPACE</span>
+          <h1>오늘의 이야기를<br />함께 나눠보세요<span>.</span></h1>
+          <p>
+            궁금한 점부터 일상 이야기까지,<br class="mobile-only" />
+            자유롭게 소통하는 공간.
+          </p>
+          <button class="btn btn-light" id="hero-write">
+            첫 번째 이야기 작성하기 ↗
+          </button>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-circle circle-one"></div>
+          <div class="art-circle circle-two"></div>
+          <div class="art-card">
+            <span class="art-emoji">✳</span>
+            <div class="art-lines"><i></i><i></i><i></i></div>
+            <span class="art-label">IDEAS GROW HERE</span>
+          </div>
+          <span class="art-star star-one">✦</span>
+          <span class="art-star star-two">✳</span>
+        </div>
+      </section>
+
+      <section class="community">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">COMMUNITY</span>
+            <h2>커뮤니티 피드</h2>
+            <p class="muted">다양한 사람들의 이야기를 만나보세요.</p>
+          </div>
+          <span class="post-total" id="post-total">게시글 불러오는 중</span>
+        </div>
+
+        <div class="toolbar">
+          <div class="tabs" id="category-tabs" aria-label="게시판 분류">
+            <button class="tab active" data-category="">전체 글</button>
+            <button class="tab" data-category="자유게시판">자유게시판</button>
+            <button class="tab" data-category="질문·답변">질문·답변</button>
+            <button class="tab" data-category="정보공유">정보공유</button>
+            <button class="tab" data-category="공지사항">공지사항</button>
+          </div>
+          <form class="search" id="search-form">
+            <span aria-hidden="true">⌕</span>
+            <input
+              id="search-input"
+              type="search"
+              maxlength="100"
+              placeholder="게시글 검색"
+              aria-label="게시글 검색"
+            />
+            <button type="submit" aria-label="검색">검색</button>
+          </form>
+        </div>
+
+        <div id="feed" class="feed" aria-live="polite">
+          <div class="empty-state">게시글을 불러오고 있어요...</div>
+        </div>
+        <div id="pagination" class="pagination"></div>
+      </section>
+
+      <footer>
+        <a href="/" class="footer-brand">My Website</a>
+        <span>좋은 대화는 좋은 커뮤니티를 만듭니다.</span>
+        <span>© <span id="year"></span> My Website</span>
+      </footer>
+    </main>
+
+    <dialog id="write-dialog" class="dialog">
+      <form id="write-form">
+        <div class="dialog-heading">
+          <div>
+            <span class="eyebrow">NEW STORY</span>
+            <h2>새 글 작성</h2>
+          </div>
+          <button
+            type="button"
+            class="icon-button"
+            data-close
+            aria-label="닫기"
+          >
+            ✕
+          </button>
+        </div>
+        <label for="write-author">작성자</label>
+        <input
+          id="write-author"
+          name="author"
+          maxlength="30"
+          placeholder="닉네임"
+          required
+        />
+        <label for="write-category">게시판</label>
+        <select id="write-category" name="category">
+          <option>자유게시판</option>
+          <option>질문·답변</option>
+          <option>정보공유</option>
+          <option>공지사항</option>
+        </select>
+        <label for="write-title">제목</label>
+        <input
+          id="write-title"
+          name="title"
+          maxlength="100"
+          placeholder="어떤 이야기를 나눠볼까요?"
+          required
+        />
+        <label for="write-content">내용</label>
+        <textarea
+          id="write-content"
+          name="content"
+          maxlength="10000"
+          rows="6"
+          placeholder="자유롭게 이야기를 작성해 주세요."
+          required
+        ></textarea>
+        <p id="write-error" class="form-error" role="alert"></p>
+        <button class="btn btn-primary btn-wide" type="submit">
+          게시글 등록하기
+        </button>
+      </form>
+    </dialog>
+
+    <dialog id="detail-dialog" class="dialog detail-dialog">
+      <div class="dialog-heading">
+        <span class="eyebrow">STORY DETAIL</span>
+        <button type="button" class="icon-button" data-close aria-label="닫기">
+          ✕
+        </button>
+      </div>
+      <div id="detail-content"></div>
+      <section class="comments-section">
+        <h3>댓글 <span id="comment-total">0</span></h3>
+        <div id="comment-list"></div>
+        <form id="comment-form" class="comment-form">
+          <label for="comment-author">닉네임</label>
+          <input
+            id="comment-author"
+            maxlength="30"
+            placeholder="닉네임"
+            required
+          />
+          <label for="comment-content">댓글</label>
+          <textarea
+            id="comment-content"
+            maxlength="1000"
+            rows="3"
+            placeholder="따뜻한 댓글을 남겨주세요."
+            required
+          ></textarea>
+          <p id="comment-error" class="form-error" role="alert"></p>
+          <button class="btn btn-primary btn-wide" type="submit">
+            댓글 등록
+          </button>
+        </form>
+      </section>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

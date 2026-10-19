@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: my-website
+    runtime: docker
+    plan: starter
+    region: oregon
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_PATH
+        value: /var/data/community.db
+    disk:
+      name: community-data
+      mountPath: /var/data
+      sizeGB: 1
